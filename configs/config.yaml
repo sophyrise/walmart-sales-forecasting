@@ -1,0 +1,22 @@
+# Project configuration
+project_name: walmart-sales-forecasting
+data_path: ./data
+models_path: ./models
+
+# MLflow settings
+mlflow:
+  tracking_uri: dagshub
+  experiment_tracking: true
+
+# Data settings
+data:
+  random_seed: 42
+  train_test_split: 0.8
+  validation_split: 0.2
+
+# Model experiments
+experiments:
+  - XGBoost_Training
+  - LightGBM_Training
+  - NBEATS_Training
+  - Prophet_Training
