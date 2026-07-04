@@ -1,0 +1,8 @@
+# Deep-learning + foundation models (N-BEATS, DLinear, TFT, PatchTST, TimesFM).
+# Heavy — best run on Kaggle GPU. Install:  pip install -r requirements-dl.txt
+torch>=2.0.0
+pytorch-lightning>=2.0.0
+neuralforecast>=1.7.0   # N-BEATS, NHITS, TFT, PatchTST, DLinear (Nixtla)
+wandb>=0.15.0           # optional tracking for neural nets
+# TimesFM (foundation model, bonus) — install separately when needed:
+#   pip install timesfm

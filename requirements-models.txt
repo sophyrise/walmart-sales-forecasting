@@ -1,0 +1,6 @@
+# Tree-based + classical statistical models.
+# Install:  pip install -r requirements-models.txt
+xgboost>=2.0.0
+lightgbm>=4.0.0
+statsmodels>=0.14.0   # ARIMA / SARIMA
+prophet>=1.1.0        # Prophet
