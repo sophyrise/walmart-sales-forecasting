@@ -1,15 +1,3 @@
-"""Time-aware validation splits.
-
-Random k-fold leaks the future into the past for a forecasting task, so we
-split strictly by calendar date. Two helpers:
-
-  * `time_holdout`      -> single split, last `weeks` used as validation.
-  * `expanding_splits`  -> expanding-window backtest yielding several folds,
-                           each validating on the next `horizon` weeks.
-
-Both return integer positional indices into the frame you pass in, so they
-plug straight into numpy/pandas and scikit-learn.
-"""
 from __future__ import annotations
 
 from typing import Iterator
@@ -23,7 +11,6 @@ def _sorted_unique_dates(dates: pd.Series) -> np.ndarray:
 
 
 def time_holdout(df: pd.DataFrame, weeks: int = 8, date_col: str = "Date"):
-    """Return (train_idx, val_idx) with the last `weeks` distinct weeks held out."""
     uniq = _sorted_unique_dates(df[date_col])
     if weeks >= len(uniq):
         raise ValueError(f"weeks={weeks} >= number of distinct weeks {len(uniq)}")
@@ -40,12 +27,6 @@ def expanding_splits(
     horizon: int = 8,
     date_col: str = "Date",
 ) -> Iterator[tuple[np.ndarray, np.ndarray]]:
-    """Expanding-window backtest.
-
-    With n_splits=3, horizon=8 the validation windows are the last 24 weeks
-    chopped into three consecutive 8-week blocks; each fold trains on
-    everything strictly before its validation block.
-    """
     uniq = _sorted_unique_dates(df[date_col])
     needed = horizon * n_splits
     if needed >= len(uniq):
@@ -55,7 +36,6 @@ def expanding_splits(
         )
     d = pd.to_datetime(df[date_col]).to_numpy()
     for k in range(n_splits):
-        # Fold k validates on weeks [start, end); folds ordered oldest->newest.
         end_offset = needed - k * horizon
         start_offset = end_offset - horizon
         val_start = uniq[-end_offset]

@@ -1,11 +1,9 @@
-# Data
 /data/raw/
 /data/processed/
 *.csv
 *.parquet
 *.xlsx
 
-# MLflow & experiments
 /mlruns/
 /wandb/
 .wandb/
@@ -14,28 +12,23 @@
 *.pth
 *.pt
 
-# Environment
 .env
 .env.local
 venv/
 env/
 .venv/
 
-# Jupyter
 .ipynb_checkpoints/
 __pycache__/
 *.pyc
 *.pyo
 
-# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS
 .DS_Store
 Thumbs.db
 
-# DVC
 .dvc/config.local
