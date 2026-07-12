@@ -1,0 +1,109 @@
+======================================================================
+ARIMA — FULL RESULTS SUMMARY
+======================================================================
+
+--- 1. Data Cleaning ---
+  train_rows_before: 421570
+  train_rows_after: 421570
+  train_duplicates_removed: 0
+  train_negative_sales_clipped: 1285
+  train_markdown_na_filled: 1422431
+  test_rows_before: 115064
+  test_rows_after: 115064
+  test_duplicates_removed: 0
+  test_negative_sales_clipped: 0
+  test_markdown_na_filled: 51493
+
+--- 2. Feature Engineering ---
+  n_rows_train: 421570
+  n_unique_series: 3331
+
+--- 3. Feature Selection (informational, NOT used by ARIMA) ---
+              abs_corr_with_y  missing_rate
+MarkDown5            0.050465           0.0
+MarkDown1            0.047172           0.0
+MarkDown3            0.038562           0.0
+MarkDown4            0.037467           0.0
+Unemployment         0.025860           0.0
+CPI                  0.020923           0.0
+MarkDown2            0.020720           0.0
+Temperature          0.002312           0.0
+Fuel_Price           0.000121           0.0
+
+--- 4. Train/Valid Split ---
+  cutoff_date: 2012-01-27
+  n_series (valid_ids): 2670
+  train rows: 277574 | valid rows: 104130
+
+--- 4b. Stationarity (ADF) ---
+  ADF p-value (level): 0.0000
+  ADF p-value (diff, d=1): 0.0000
+
+--- 5. Hyperparameter Search -- Stage 1 (Random Search, 15-series sample) ---
+ p  d  q  trial     val_WMAE      val_MAE  n_failed_fits  train_minutes
+ 2  1  0 trial1  2615.381077  2464.932143              0       0.108611
+ 1  1  0 trial7  2633.854926  2475.296349              0       0.109661
+ 0  1  0 trial6  2776.119461  2617.178291              0       0.113519
+ 2  0  2 trial5  2846.137584  2750.531841              0       0.138675
+ 2  0  0 trial0  4405.916459  4301.720073              0       0.114343
+ 1  0  0 trial3  5583.467183  5516.364184              0       0.113191
+ 0  0  2 trial2 13010.701786 13049.939525              0       0.122177
+ 0  0  0 trial4 13508.995745 13336.929846              0       0.110228
+
+  Stage 1 best: trial1 | val_WMAE=2615.38 | val_MAE=2464.93
+
+--- 5b. Hyperparameter Search -- Stage 2 (Full Grid Search, 16 trials) ---
+ p  d  q   trial    val_WMAE     val_MAE  n_failed_fits  train_minutes
+ 2  1  2 trial10 2448.831299 2359.716931              0       0.131035
+ 2  1  1  trial9 2505.636076 2448.238369              0       0.128791
+ 3  1  0 trial12 2531.311005 2405.847161              0       0.109250
+ 3  1  1 trial13 2555.056365 2455.388704              0       0.125971
+ 2  1  3 trial11 2557.349809 2492.300897              0       0.139362
+ 3  1  3 trial15 2558.754066 2468.752977              0       0.155418
+ 2  1  0  trial8 2615.381077 2464.932143              0       0.110587
+ 1  1  0  trial4 2633.854926 2475.296349              0       0.113429
+ 0  1  2  trial2 2663.518180 2592.236000              0       0.117693
+ 1  1  2  trial6 2677.686243 2568.891734              0       0.127528
+ 0  1  1  trial1 2690.710694 2603.406550              0       0.114887
+ 1  1  3  trial7 2695.313169 2627.635259              0       0.131018
+ 3  1  2 trial14 2712.107347 2661.224051              0       0.139932
+ 0  1  3  trial3 2730.258756 2674.264406              0       0.122831
+ 1  1  1  trial5 2750.389149 2689.720537              0       0.119969
+ 0  1  0  trial0 2776.119461 2617.178291              0       0.110912
+
+  Stage 2 best: trial10 | val_WMAE=2448.83 | val_MAE=2359.72
+
+  WINNING STAGE: stage_2 (full grid)
+  FINAL best_cfg: {'p': 2, 'd': 1, 'q': 2} | order=(2, 1, 2) | seasonal_order=(0, 0, 0, 0)
+
+--- 6. Final Training (300-series holdout evaluation) ---
+  final_wmae (holdout, 39-week): 3038.54
+  final_mae  (holdout, 39-week): 3044.67
+  failed fits: 0/300
+
+--- 7. Deploy Refit (best_cfg, full history arima_df) ---
+  max train date used: 2012-10-26
+  n_series fitted: 2670 | failed: 0
+  pipeline saved to: ./arima_pipeline_model
+
+--- 8. Pipeline Preview (raw test.csv -> predictions, with fallback) ---
+  shape: (115064, 3)
+unique_id         ds  Weekly_Sales_Pred
+     10_1 2012-11-02       49922.051424
+     10_1 2012-11-09       39940.196012
+     10_1 2012-11-16       39056.901142
+     10_1 2012-11-23       37840.561055
+     10_1 2012-11-30       37751.543808
+     10_1 2012-12-07       37603.022046
+     10_1 2012-12-14       37594.475311
+     10_1 2012-12-21       37576.302001
+     10_1 2012-12-28       37575.545421
+     10_1 2013-01-04       37573.316982
+
+--- 9. Wandb Registry ---
+  artifact name: ARIMA_pipeline
+  registry target: wandb-registry-model/ARIMA
+
+======================================================================
+END OF SUMMARY
+======================================================================
