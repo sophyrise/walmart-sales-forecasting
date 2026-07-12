@@ -1,0 +1,126 @@
+======================================================================
+TFT — FULL RESULTS SUMMARY
+======================================================================
+
+--- 1. Data Cleaning ---
+  train_rows_before: 421570
+  train_rows_after: 421570
+  train_duplicates_removed: 0
+  train_negative_sales_clipped: 1285
+  train_markdown_na_filled: 1422431
+  test_rows_before: 115064
+  test_rows_after: 115064
+  test_duplicates_removed: 0
+  test_negative_sales_clipped: 0
+  test_markdown_na_filled: 51493
+
+--- 2. Feature Engineering ---
+  n_rows_train: 421570
+  n_unique_series: 3331
+  store_exog date range: 2010-02-05 -> 2013-07-26
+
+--- 3. Feature Selection (used as TFT input) ---
+              abs_corr_with_y  missing_rate
+MarkDown5            0.050465           0.0
+MarkDown1            0.047172           0.0
+MarkDown3            0.038562           0.0
+MarkDown4            0.037467           0.0
+Unemployment         0.025860           0.0
+CPI                  0.020923           0.0
+MarkDown2            0.020720           0.0
+Temperature          0.002312           0.0
+Fuel_Price           0.000121           0.0
+  futr_exog_list: ['MarkDown5', 'MarkDown1', 'MarkDown3', 'MarkDown4', 'Unemployment', 'CPI', 'MarkDown2', 'IsHoliday', 'IsSuperBowl', 'IsLaborDay', 'IsThanksgiving', 'IsChristmas', 'Month', 'WeekOfYear']
+  stat_exog_list: ['Size', 'Type_A', 'Type_B', 'Type_C']
+
+--- 4. Train/Valid Split ---
+  cutoff_date: 2012-01-27
+  n_series (valid_ids): 2726
+  train rows: 283038 | valid rows: 106314
+
+--- 5. Hyperparameter Search -- Stage 1 (Random Search) ---
+ input_size  hidden_size  learning_rate  batch_size  trial    val_WMAE     val_MAE  train_minutes
+         39           16         0.0005          32 trial7 2327.476161 2286.118618       0.602876
+         39           16         0.0030          32 trial3 2495.861292 2274.942972       0.597046
+        117           32         0.0010          64 trial4 2555.934928 2447.187385       1.312171
+        117           32         0.0010          32 trial5 2574.656086 2492.746366       0.749595
+         39           16         0.0010          32 trial1 2652.359504 2597.170144       0.593909
+        117           32         0.0005          64 trial6 2710.906085 2598.569066       2.536269
+        117           16         0.0030          64 trial2 2774.473718 2797.248537       0.900217
+        117           16         0.0010          64 trial0 2838.376099 2781.052062       1.421702
+
+  Stage 1 best: trial7 | val_WMAE=2327.48 | val_MAE=2286.12
+
+--- 5b. Hyperparameter Search -- Stage 2 (Full Grid Search, 36 trials) ---
+ input_size  hidden_size  learning_rate  batch_size   trial    val_WMAE     val_MAE  train_minutes
+         39           32          0.004          32 trial10 2183.351747 2115.214548       0.570178
+         52           16          0.001          64 trial13 2333.212078 2304.085351       0.572754
+         39           32          0.001          32  trial6 2362.823894 2189.152920       0.616093
+         52           32          0.001          32 trial18 2364.512257 2337.715525       0.873864
+         52           16          0.002          32 trial14 2383.269006 2352.762491       0.411967
+         39           32          0.004          64 trial11 2392.751963 2265.445284       0.715539
+        117           32          0.002          32 trial32 2410.737765 2273.071797       0.753399
+         39           16          0.004          32  trial4 2446.981307 2358.206682       0.613479
+         39           32          0.002          32  trial8 2483.569010 2394.690628       0.613272
+        117           32          0.004          64 trial35 2487.713877 2420.077624       1.714584
+        117           16          0.004          32 trial28 2497.253596 2411.502865       0.537382
+        117           16          0.001          32 trial24 2498.949994 2493.977892       0.544483
+         39           32          0.002          64  trial9 2531.582586 2241.862117       0.814839
+         39           16          0.002          32  trial2 2533.924359 2486.862873       0.558105
+        117           32          0.002          64 trial33 2541.950535 2461.427022       1.312003
+        117           32          0.001          64 trial31 2555.934928 2447.187385       1.320855
+         39           16          0.001          64  trial1 2560.729520 2540.927738       0.640808
+         52           16          0.004          32 trial16 2561.063826 2445.413524       0.570457
+         39           32          0.001          64  trial7 2567.158769 2367.447573       0.910286
+        117           32          0.001          32 trial30 2574.656086 2492.746366       0.747496
+         52           16          0.002          64 trial15 2605.649450 2611.131398       0.575020
+         39           16          0.002          64  trial3 2608.979587 2563.919882       0.510180
+         39           16          0.004          64  trial5 2623.602696 2366.303057       0.506262
+        117           16          0.002          32 trial26 2630.421227 2605.537746       0.542155
+        117           32          0.004          32 trial34 2652.028594 2512.081275       1.171487
+         39           16          0.001          32  trial0 2652.359504 2597.170144       0.600276
+        117           16          0.004          64 trial29 2662.515888 2582.203822       0.897283
+         52           32          0.004          64 trial23 2664.633932 2495.813653       0.936444
+         52           32          0.004          32 trial22 2711.424581 2625.607689       0.683476
+         52           32          0.001          64 trial19 2712.969190 2557.759821       1.154462
+         52           16          0.004          64 trial17 2732.304143 2565.744591       0.579989
+         52           32          0.002          64 trial21 2798.310130 2546.727831       1.161824
+         52           32          0.002          32 trial20 2801.015369 2712.517141       0.494131
+         52           16          0.001          32 trial12 2821.394705 2830.969799       0.813419
+        117           16          0.001          64 trial25 2838.376099 2781.052062       1.158055
+        117           16          0.002          64 trial27 3012.303372 2966.198915       0.903911
+
+  Stage 2 best: trial10 | val_WMAE=2183.35 | val_MAE=2115.21
+
+  WINNING STAGE: stage_2 (full grid)
+  FINAL best_cfg: {'input_size': 39, 'hidden_size': 32, 'learning_rate': 0.004, 'batch_size': 32}
+
+--- 6. Final Training (best_cfg, full Y_train) ---
+  final_wmae (holdout, 39-week): 2552.36
+  final_mae  (holdout, 39-week): 2493.79
+
+--- 7. Deploy Refit (best_cfg, full history nf_df) ---
+  max train date used: 2012-10-26
+  pipeline saved to: ./tft_pipeline_model
+
+--- 8. Pipeline Preview (raw test.csv -> predictions, with fallback) ---
+  shape: (115064, 3)
+unique_id         ds  Weekly_Sales_Pred
+      1_1 2012-11-02       25361.585938
+      1_2 2012-11-02       43956.855469
+      1_3 2012-11-02        9619.089844
+      1_4 2012-11-02       36396.269531
+      1_5 2012-11-02       24414.511719
+      1_6 2012-11-02        3992.727783
+      1_7 2012-11-02       22290.515625
+      1_8 2012-11-02       39293.023438
+      1_9 2012-11-02       40669.761719
+     1_10 2012-11-02       28695.964844
+
+--- 9. Wandb Registry ---
+  artifact name: TFT_pipeline
+  registry target: wandb-registry-model/TFT
+
+======================================================================
+END OF SUMMARY
+======================================================================
