@@ -1,0 +1,1 @@
+{"columns":["num_leaves","learning_rate","n_estimators","cv_wmae_mean"],"data":[[63,0.05,100,2166.81064],[31,0.05,100,2320.70503]]}
