@@ -4,8 +4,8 @@
 *.parquet
 *.xlsx
 
-/mlruns/
-/wandb/
+mlruns/
+wandb/
 .wandb/
 *.pkl
 *.joblib
