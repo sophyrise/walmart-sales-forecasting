@@ -1,4 +1,0 @@
-torch>=2.0.0
-pytorch-lightning>=2.0.0
-neuralforecast>=1.7.0
-wandb>=0.15.0
